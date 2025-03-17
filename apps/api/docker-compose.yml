@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    container_name: foundation_db
+    container_name: logitrack_db
     image: postgres
     restart: always
     ports:
@@ -14,7 +14,7 @@ services:
     volumes:
       - db_data_foundationx:/var/lib/postgresql/data
   pgadmin:
-    container_name: foundation_pgadmin
+    container_name: logitrack_pgadmin
     image: dpage/pgadmin4
     restart: always
     environment:
