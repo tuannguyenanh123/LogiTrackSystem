@@ -1,16 +1,31 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import {
+  DateTimeFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input'
+import { UserRelationFilter } from 'src/models/users/graphql/dtos/where.args'
+import { WarehouseListRelationFilter } from 'src/models/warehouses/graphql/dtos/where.args'
 
 @InputType()
 export class DistributorWhereUniqueInput {
-  id: number
+  uid: string
 }
 
 @InputType()
-export class DistributorWhereInputStrict implements RestrictProperties<DistributorWhereInputStrict, Prisma.DistributorWhereInput> {
-  // Todo: Add the below field decorator only to the $Enums types.
-  // @Field(() => $Enums.x)
+export class DistributorWhereInputStrict
+  implements
+    RestrictProperties<
+      DistributorWhereInputStrict,
+      Prisma.DistributorWhereInput
+    >
+{
+  uid: StringFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  user: UserRelationFilter
+  Warehouses: WarehouseListRelationFilter
 
   AND: DistributorWhereInput[]
   OR: DistributorWhereInput[]

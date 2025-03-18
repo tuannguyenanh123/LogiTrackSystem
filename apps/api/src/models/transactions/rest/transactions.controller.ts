@@ -1,5 +1,12 @@
 import {
-  Controller, Get, Post, Body, Patch, Param, Delete, Query
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
 } from '@nestjs/common'
 
 import { PrismaService } from 'src/common/prisma/prisma.service'
@@ -17,7 +24,6 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { GetUserType } from 'src/common/types'
 import { checkRowLevelPermission } from 'src/common/auth/util'
 
-
 @ApiTags('transactions')
 @Controller('transactions')
 export class TransactionsController {
@@ -27,8 +33,10 @@ export class TransactionsController {
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: TransactionEntity })
   @Post()
-  create(@Body() createTransactionDto: CreateTransaction, @GetUser() user: GetUserType) {
-    checkRowLevelPermission(user, createTransactionDto.uid)
+  create(
+    @Body() createTransactionDto: CreateTransaction,
+    @GetUser() user: GetUserType,
+  ) {
     return this.prisma.transaction.create({ data: createTransactionDto })
   }
 
@@ -57,8 +65,6 @@ export class TransactionsController {
     @Body() updateTransactionDto: UpdateTransaction,
     @GetUser() user: GetUserType,
   ) {
-    const transaction = await this.prisma.transaction.findUnique({ where: { id } })
-    checkRowLevelPermission(user, transaction.uid)
     return this.prisma.transaction.update({
       where: { id },
       data: updateTransactionDto,
@@ -69,8 +75,6 @@ export class TransactionsController {
   @AllowAuthenticated()
   @Delete(':id')
   async remove(@Param('id') id: number, @GetUser() user: GetUserType) {
-    const transaction = await this.prisma.transaction.findUnique({ where: { id } })
-    checkRowLevelPermission(user, transaction.uid)
     return this.prisma.transaction.delete({ where: { id } })
   }
 }

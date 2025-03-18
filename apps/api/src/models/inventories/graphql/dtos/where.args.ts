@@ -1,6 +1,12 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import {
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+} from 'src/common/dtos/common.input'
+import { ProductRelationFilter } from 'src/models/products/graphql/dtos/where.args'
+import { WarehouseRelationFilter } from 'src/models/warehouses/graphql/dtos/where.args'
 
 @InputType()
 export class InventoryWhereUniqueInput {
@@ -8,9 +14,18 @@ export class InventoryWhereUniqueInput {
 }
 
 @InputType()
-export class InventoryWhereInputStrict implements RestrictProperties<InventoryWhereInputStrict, Prisma.InventoryWhereInput> {
-  // Todo: Add the below field decorator only to the $Enums types.
-  // @Field(() => $Enums.x)
+export class InventoryWhereInputStrict
+  implements
+    RestrictProperties<InventoryWhereInputStrict, Prisma.InventoryWhereInput>
+{
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  productId: IntFilter
+  warehouseId: IntFilter
+  quantity: IntFilter
+  product: ProductRelationFilter
+  warehouse: WarehouseRelationFilter
 
   AND: InventoryWhereInput[]
   OR: InventoryWhereInput[]

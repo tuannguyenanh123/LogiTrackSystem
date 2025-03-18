@@ -1,5 +1,12 @@
 import {
-  Controller, Get, Post, Body, Patch, Param, Delete, Query
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
 } from '@nestjs/common'
 
 import { PrismaService } from 'src/common/prisma/prisma.service'
@@ -17,7 +24,6 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { GetUserType } from 'src/common/types'
 import { checkRowLevelPermission } from 'src/common/auth/util'
 
-
 @ApiTags('inventories')
 @Controller('inventories')
 export class InventoriesController {
@@ -27,8 +33,10 @@ export class InventoriesController {
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: InventoryEntity })
   @Post()
-  create(@Body() createInventoryDto: CreateInventory, @GetUser() user: GetUserType) {
-    checkRowLevelPermission(user, createInventoryDto.uid)
+  create(
+    @Body() createInventoryDto: CreateInventory,
+    @GetUser() user: GetUserType,
+  ) {
     return this.prisma.inventory.create({ data: createInventoryDto })
   }
 
@@ -57,8 +65,6 @@ export class InventoriesController {
     @Body() updateInventoryDto: UpdateInventory,
     @GetUser() user: GetUserType,
   ) {
-    const inventory = await this.prisma.inventory.findUnique({ where: { id } })
-    checkRowLevelPermission(user, inventory.uid)
     return this.prisma.inventory.update({
       where: { id },
       data: updateInventoryDto,
@@ -69,8 +75,6 @@ export class InventoriesController {
   @AllowAuthenticated()
   @Delete(':id')
   async remove(@Param('id') id: number, @GetUser() user: GetUserType) {
-    const inventory = await this.prisma.inventory.findUnique({ where: { id } })
-    checkRowLevelPermission(user, inventory.uid)
     return this.prisma.inventory.delete({ where: { id } })
   }
 }

@@ -1,5 +1,12 @@
 import {
-  Controller, Get, Post, Body, Patch, Param, Delete, Query
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
 } from '@nestjs/common'
 
 import { PrismaService } from 'src/common/prisma/prisma.service'
@@ -17,7 +24,6 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { GetUserType } from 'src/common/types'
 import { checkRowLevelPermission } from 'src/common/auth/util'
 
-
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
@@ -27,8 +33,10 @@ export class ProductsController {
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: ProductEntity })
   @Post()
-  create(@Body() createProductDto: CreateProduct, @GetUser() user: GetUserType) {
-    checkRowLevelPermission(user, createProductDto.uid)
+  create(
+    @Body() createProductDto: CreateProduct,
+    @GetUser() user: GetUserType,
+  ) {
     return this.prisma.product.create({ data: createProductDto })
   }
 
@@ -57,8 +65,6 @@ export class ProductsController {
     @Body() updateProductDto: UpdateProduct,
     @GetUser() user: GetUserType,
   ) {
-    const product = await this.prisma.product.findUnique({ where: { id } })
-    checkRowLevelPermission(user, product.uid)
     return this.prisma.product.update({
       where: { id },
       data: updateProductDto,
@@ -69,8 +75,6 @@ export class ProductsController {
   @AllowAuthenticated()
   @Delete(':id')
   async remove(@Param('id') id: number, @GetUser() user: GetUserType) {
-    const product = await this.prisma.product.findUnique({ where: { id } })
-    checkRowLevelPermission(user, product.uid)
     return this.prisma.product.delete({ where: { id } })
   }
 }

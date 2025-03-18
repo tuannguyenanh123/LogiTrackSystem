@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { FindManyManufacturerArgs, FindUniqueManufacturerArgs } from './dtos/find.args'
+import {
+  FindManyManufacturerArgs,
+  FindUniqueManufacturerArgs,
+} from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateManufacturerInput } from './dtos/create-manufacturer.input'
 import { UpdateManufacturerInput } from './dtos/update-manufacturer.input'
@@ -22,9 +25,9 @@ export class ManufacturersService {
   }
 
   update(updateManufacturerInput: UpdateManufacturerInput) {
-    const { id, ...data } = updateManufacturerInput
+    const { uid, ...data } = updateManufacturerInput
     return this.prisma.manufacturer.update({
-      where: { id },
+      where: { uid },
       data: data,
     })
   }

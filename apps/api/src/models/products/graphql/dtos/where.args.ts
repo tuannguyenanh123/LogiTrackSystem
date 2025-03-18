@@ -1,6 +1,14 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import {
+  DateTimeFilter,
+  IntFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input'
+import { InventoryListRelationFilter } from 'src/models/inventories/graphql/dtos/where.args'
+import { ManufacturerRelationFilter } from 'src/models/manufacturers/graphql/dtos/where.args'
+import { TransactionListRelationFilter } from 'src/models/transactions/graphql/dtos/where.args'
 
 @InputType()
 export class ProductWhereUniqueInput {
@@ -8,9 +16,20 @@ export class ProductWhereUniqueInput {
 }
 
 @InputType()
-export class ProductWhereInputStrict implements RestrictProperties<ProductWhereInputStrict, Prisma.ProductWhereInput> {
-  // Todo: Add the below field decorator only to the $Enums types.
-  // @Field(() => $Enums.x)
+export class ProductWhereInputStrict
+  implements
+    RestrictProperties<ProductWhereInputStrict, Prisma.ProductWhereInput>
+{
+  id: IntFilter
+  createdAt: DateTimeFilter
+  updatedAt: DateTimeFilter
+  name: StringFilter
+  description: StringFilter
+  image: StringFilter
+  manufacturerUid: StringFilter
+  Manufacturer: ManufacturerRelationFilter
+  Inventories: InventoryListRelationFilter
+  Transactions: TransactionListRelationFilter
 
   AND: ProductWhereInput[]
   OR: ProductWhereInput[]
@@ -18,9 +37,7 @@ export class ProductWhereInputStrict implements RestrictProperties<ProductWhereI
 }
 
 @InputType()
-export class ProductWhereInput extends PartialType(
-  ProductWhereInputStrict,
-) {}
+export class ProductWhereInput extends PartialType(ProductWhereInputStrict) {}
 
 @InputType()
 export class ProductListRelationFilter {
