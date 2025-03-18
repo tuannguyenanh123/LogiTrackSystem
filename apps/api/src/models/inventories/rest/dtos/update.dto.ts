@@ -5,4 +5,3 @@ import { Inventory } from '@prisma/client'
 export class UpdateInventory extends PartialType(CreateInventory) {
   id: Inventory['id']
 }
-

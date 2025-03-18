@@ -11,4 +11,3 @@ export class RetailerQueryDto extends BaseQueryDto {
   @IsIn(Object.values(Prisma.RetailerScalarFieldEnum))
   searchBy?: string
 }
-

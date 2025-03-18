@@ -11,4 +11,3 @@ export class DistributorQueryDto extends BaseQueryDto {
   @IsIn(Object.values(Prisma.DistributorScalarFieldEnum))
   searchBy?: string
 }
-

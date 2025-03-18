@@ -10,7 +10,11 @@ registerEnumType(Prisma.InventoryScalarFieldEnum, {
 
 @ArgsType()
 class FindManyInventoryArgsStrict
-  implements RestrictProperties<FindManyInventoryArgsStrict, Omit<Prisma.InventoryFindManyArgs, 'include' | 'select'>>
+  implements
+    RestrictProperties<
+      FindManyInventoryArgsStrict,
+      Omit<Prisma.InventoryFindManyArgs, 'include' | 'select'>
+    >
 {
   where: InventoryWhereInput
   orderBy: InventoryOrderByWithRelationInput[]

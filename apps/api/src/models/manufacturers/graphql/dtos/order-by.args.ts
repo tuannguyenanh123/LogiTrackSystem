@@ -7,7 +7,11 @@ import { WarehouseOrderByRelationAggregateInput } from 'src/models/warehouses/gr
 
 @InputType()
 export class ManufacturerOrderByWithRelationInputStrict
-  implements RestrictProperties<ManufacturerOrderByWithRelationInputStrict, Prisma.ManufacturerOrderByWithRelationInput>
+  implements
+    RestrictProperties<
+      ManufacturerOrderByWithRelationInputStrict,
+      Prisma.ManufacturerOrderByWithRelationInput
+    >
 {
   @Field(() => Prisma.SortOrder)
   uid: Prisma.SortOrder
@@ -15,12 +19,11 @@ export class ManufacturerOrderByWithRelationInputStrict
   createdAt: Prisma.SortOrder
   @Field(() => Prisma.SortOrder)
   updatedAt: Prisma.SortOrder
-  
+
   user: UserOrderByWithRelationInput
   Products: ProductOrderByRelationAggregateInput
   Warehouses: WarehouseOrderByRelationAggregateInput
 }
-
 
 @InputType()
 export class ManufacturerOrderByWithRelationInput extends PartialType(

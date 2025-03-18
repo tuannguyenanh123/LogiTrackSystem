@@ -1,6 +1,10 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
-import { DateTimeFilter, RestrictProperties, StringFilter } from 'src/common/dtos/common.input'
+import {
+  DateTimeFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input'
 import { ProductListRelationFilter } from 'src/models/products/graphql/dtos/where.args'
 import { UserRelationFilter } from 'src/models/users/graphql/dtos/where.args'
 import { WarehouseListRelationFilter } from 'src/models/warehouses/graphql/dtos/where.args'
@@ -11,7 +15,13 @@ export class ManufacturerWhereUniqueInput {
 }
 
 @InputType()
-export class ManufacturerWhereInputStrict implements RestrictProperties<ManufacturerWhereInputStrict, Prisma.ManufacturerWhereInput> {
+export class ManufacturerWhereInputStrict
+  implements
+    RestrictProperties<
+      ManufacturerWhereInputStrict,
+      Prisma.ManufacturerWhereInput
+    >
+{
   uid: StringFilter
   createdAt: DateTimeFilter
   updatedAt: DateTimeFilter

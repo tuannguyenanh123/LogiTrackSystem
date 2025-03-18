@@ -10,7 +10,11 @@ registerEnumType(Prisma.RetailerScalarFieldEnum, {
 
 @ArgsType()
 class FindManyRetailerArgsStrict
-  implements RestrictProperties<FindManyRetailerArgsStrict, Omit<Prisma.RetailerFindManyArgs, 'include' | 'select'>>
+  implements
+    RestrictProperties<
+      FindManyRetailerArgsStrict,
+      Omit<Prisma.RetailerFindManyArgs, 'include' | 'select'>
+    >
 {
   where: RetailerWhereInput
   orderBy: RetailerOrderByWithRelationInput[]

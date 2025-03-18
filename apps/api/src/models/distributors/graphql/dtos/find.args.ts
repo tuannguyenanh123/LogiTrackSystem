@@ -1,7 +1,10 @@
 import { ArgsType, Field, registerEnumType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
 import { DistributorOrderByWithRelationInput } from './order-by.args'
-import { DistributorWhereInput, DistributorWhereUniqueInput } from './where.args'
+import {
+  DistributorWhereInput,
+  DistributorWhereUniqueInput,
+} from './where.args'
 import { RestrictProperties } from 'src/common/dtos/common.input'
 
 registerEnumType(Prisma.DistributorScalarFieldEnum, {
@@ -10,7 +13,11 @@ registerEnumType(Prisma.DistributorScalarFieldEnum, {
 
 @ArgsType()
 class FindManyDistributorArgsStrict
-  implements RestrictProperties<FindManyDistributorArgsStrict, Omit<Prisma.DistributorFindManyArgs, 'include' | 'select'>>
+  implements
+    RestrictProperties<
+      FindManyDistributorArgsStrict,
+      Omit<Prisma.DistributorFindManyArgs, 'include' | 'select'>
+    >
 {
   where: DistributorWhereInput
   orderBy: DistributorOrderByWithRelationInput[]

@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { FindManyWarehouseArgs, FindUniqueWarehouseArgs } from './dtos/find.args'
+import {
+  FindManyWarehouseArgs,
+  FindUniqueWarehouseArgs,
+} from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateWarehouseInput } from './dtos/create-warehouse.input'
 import { UpdateWarehouseInput } from './dtos/update-warehouse.input'
