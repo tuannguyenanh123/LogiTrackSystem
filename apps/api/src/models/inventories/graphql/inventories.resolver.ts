@@ -20,6 +20,7 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { Product } from 'src/models/products/graphql/entity/product.entity'
 import { Warehouse } from 'src/models/warehouses/graphql/entity/warehouse.entity'
+import { BadRequestException } from '@nestjs/common'
 
 @Resolver(() => Inventory)
 export class InventoriesResolver {
@@ -43,8 +44,12 @@ export class InventoriesResolver {
   }
 
   @Query(() => Inventory, { name: 'inventory' })
-  findOne(@Args() args: FindUniqueInventoryArgs) {
-    return this.inventoriesService.findOne(args)
+  async findOne(@Args() args: FindUniqueInventoryArgs) {
+    const inventory = await this.inventoriesService.findOne(args)
+    if (!inventory) {
+      throw new BadRequestException('Inventory not found')
+    }
+    return inventory
   }
 
   @AllowAuthenticated()
