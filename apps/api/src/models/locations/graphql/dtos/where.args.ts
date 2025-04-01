@@ -1,6 +1,12 @@
 import { Field, InputType, PartialType } from '@nestjs/graphql'
 import { Prisma } from '@prisma/client'
-import { RestrictProperties } from 'src/common/dtos/common.input'
+import {
+  FloatFilter,
+  IntFilter,
+  RestrictProperties,
+  StringFilter,
+} from 'src/common/dtos/common.input'
+import { WarehouseRelationFilter } from 'src/models/warehouses/graphql/dtos/where.args'
 
 @InputType()
 export class LocationWhereUniqueInput {
@@ -8,9 +14,16 @@ export class LocationWhereUniqueInput {
 }
 
 @InputType()
-export class LocationWhereInputStrict implements RestrictProperties<LocationWhereInputStrict, Prisma.LocationWhereInput> {
-  // Todo: Add the below field decorator only to the $Enums types.
-  // @Field(() => $Enums.x)
+export class LocationWhereInputStrict
+  implements
+    RestrictProperties<LocationWhereInputStrict, Prisma.LocationWhereInput>
+{
+  id: IntFilter
+  latitude: FloatFilter
+  longitude: FloatFilter
+  address: StringFilter
+  warehouseId: IntFilter
+  Warehouse: WarehouseRelationFilter
 
   AND: LocationWhereInput[]
   OR: LocationWhereInput[]
@@ -18,9 +31,7 @@ export class LocationWhereInputStrict implements RestrictProperties<LocationWher
 }
 
 @InputType()
-export class LocationWhereInput extends PartialType(
-  LocationWhereInputStrict,
-) {}
+export class LocationWhereInput extends PartialType(LocationWhereInputStrict) {}
 
 @InputType()
 export class LocationListRelationFilter {

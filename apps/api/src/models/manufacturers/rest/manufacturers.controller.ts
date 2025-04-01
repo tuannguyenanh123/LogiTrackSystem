@@ -1,5 +1,12 @@
 import {
-  Controller, Get, Post, Body, Patch, Param, Delete, Query
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
 } from '@nestjs/common'
 
 import { PrismaService } from 'src/common/prisma/prisma.service'
@@ -17,7 +24,6 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { GetUserType } from '@foundation/util/types'
 import { checkRowLevelPermission } from 'src/common/auth/util'
 
-
 @ApiTags('manufacturers')
 @Controller('manufacturers')
 export class ManufacturersController {
@@ -27,7 +33,10 @@ export class ManufacturersController {
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: ManufacturerEntity })
   @Post()
-  create(@Body() createManufacturerDto: CreateManufacturer, @GetUser() user: GetUserType) {
+  create(
+    @Body() createManufacturerDto: CreateManufacturer,
+    @GetUser() user: GetUserType,
+  ) {
     checkRowLevelPermission(user, createManufacturerDto.uid)
     return this.prisma.manufacturer.create({ data: createManufacturerDto })
   }
@@ -57,7 +66,9 @@ export class ManufacturersController {
     @Body() updateManufacturerDto: UpdateManufacturer,
     @GetUser() user: GetUserType,
   ) {
-    const manufacturer = await this.prisma.manufacturer.findUnique({ where: { uid } })
+    const manufacturer = await this.prisma.manufacturer.findUnique({
+      where: { uid },
+    })
     checkRowLevelPermission(user, manufacturer.uid)
     return this.prisma.manufacturer.update({
       where: { uid },
@@ -69,7 +80,9 @@ export class ManufacturersController {
   @AllowAuthenticated()
   @Delete(':uid')
   async remove(@Param('uid') uid: string, @GetUser() user: GetUserType) {
-    const manufacturer = await this.prisma.manufacturer.findUnique({ where: { uid } })
+    const manufacturer = await this.prisma.manufacturer.findUnique({
+      where: { uid },
+    })
     checkRowLevelPermission(user, manufacturer.uid)
     return this.prisma.manufacturer.delete({ where: { uid } })
   }

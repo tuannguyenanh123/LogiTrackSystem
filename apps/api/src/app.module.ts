@@ -9,7 +9,6 @@ import { PrismaModule } from './common/prisma/prisma.module'
 import { UsersModule } from './models/users/users.module'
 import { JwtModule } from '@nestjs/jwt'
 import { MAX_AGE } from '@foundation/util'
-import { ItemsModule } from './models/items/items.module'
 import { ManufacturersModule } from './models/manufacturers/manufacturers.module'
 import { DistributorsModule } from './models/distributors/distributors.module'
 import { RetailersModule } from './models/retailers/retailers.module'
@@ -38,7 +37,6 @@ import { InventoriesModule } from './models/inventories/inventories.module'
     ConfigModule.forRoot(),
     PrismaModule,
     UsersModule,
-    ItemsModule,
     ManufacturersModule,
     DistributorsModule,
     RetailersModule,
@@ -46,7 +44,7 @@ import { InventoriesModule } from './models/inventories/inventories.module'
     WarehousesModule,
     LocationsModule,
     TransactionsModule,
-    InventoriesModule
+    InventoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

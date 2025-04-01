@@ -11,4 +11,3 @@ export class LocationQueryDto extends BaseQueryDto {
   @IsIn(Object.values(Prisma.LocationScalarFieldEnum))
   searchBy?: string
 }
-

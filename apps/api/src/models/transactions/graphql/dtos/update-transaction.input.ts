@@ -3,6 +3,8 @@ import { InputType, PartialType } from '@nestjs/graphql'
 import { Transaction } from '@prisma/client'
 
 @InputType()
-export class UpdateTransactionInput extends PartialType(CreateTransactionInput) {
+export class UpdateTransactionInput extends PartialType(
+  CreateTransactionInput,
+) {
   id: Transaction['id']
 }

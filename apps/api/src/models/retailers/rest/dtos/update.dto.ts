@@ -3,6 +3,5 @@ import { CreateRetailer } from './create.dto'
 import { Retailer } from '@prisma/client'
 
 export class UpdateRetailer extends PartialType(CreateRetailer) {
-  id: Retailer['id']
+  uid: Retailer['uid']
 }
-

@@ -1,5 +1,12 @@
 import {
-  Controller, Get, Post, Body, Patch, Param, Delete, Query
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
 } from '@nestjs/common'
 
 import { PrismaService } from 'src/common/prisma/prisma.service'
@@ -17,7 +24,6 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { GetUserType } from 'src/common/types'
 import { checkRowLevelPermission } from 'src/common/auth/util'
 
-
 @ApiTags('locations')
 @Controller('locations')
 export class LocationsController {
@@ -27,8 +33,10 @@ export class LocationsController {
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: LocationEntity })
   @Post()
-  create(@Body() createLocationDto: CreateLocation, @GetUser() user: GetUserType) {
-    checkRowLevelPermission(user, createLocationDto.uid)
+  create(
+    @Body() createLocationDto: CreateLocation,
+    @GetUser() user: GetUserType,
+  ) {
     return this.prisma.location.create({ data: createLocationDto })
   }
 
@@ -57,8 +65,6 @@ export class LocationsController {
     @Body() updateLocationDto: UpdateLocation,
     @GetUser() user: GetUserType,
   ) {
-    const location = await this.prisma.location.findUnique({ where: { id } })
-    checkRowLevelPermission(user, location.uid)
     return this.prisma.location.update({
       where: { id },
       data: updateLocationDto,
@@ -69,8 +75,6 @@ export class LocationsController {
   @AllowAuthenticated()
   @Delete(':id')
   async remove(@Param('id') id: number, @GetUser() user: GetUserType) {
-    const location = await this.prisma.location.findUnique({ where: { id } })
-    checkRowLevelPermission(user, location.uid)
     return this.prisma.location.delete({ where: { id } })
   }
 }

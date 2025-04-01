@@ -23,6 +23,7 @@ model User {
     Manufacturer Manufacturer?
     Distributor  Distributor?
     Retailer     Retailer?
+    Admin        Admin[]
 }
 
 model Credentials {
@@ -46,6 +47,11 @@ model AuthProvider {
 enum AuthProviderType {
     GOOGLE
     CREDENTIALS
+}
+
+model Admin {
+    uid  String @id
+    user User   @relation(fields: [uid], references: [uid])
 }
 
 model Manufacturer {

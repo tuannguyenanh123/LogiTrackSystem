@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql'
 import { LocationsService } from './locations.service'
 import { Location } from './entity/location.entity'
 import { FindManyLocationArgs, FindUniqueLocationArgs } from './dtos/find.args'
@@ -8,16 +15,21 @@ import { checkRowLevelPermission } from 'src/common/auth/util'
 import { GetUserType } from 'src/common/types'
 import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { PrismaService } from 'src/common/prisma/prisma.service'
+import { Warehouse } from 'src/models/warehouses/graphql/entity/warehouse.entity'
 
 @Resolver(() => Location)
 export class LocationsResolver {
-  constructor(private readonly locationsService: LocationsService,
-    private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly locationsService: LocationsService,
+    private readonly prisma: PrismaService,
+  ) {}
 
   @AllowAuthenticated()
   @Mutation(() => Location)
-  createLocation(@Args('createLocationInput') args: CreateLocationInput, @GetUser() user: GetUserType) {
-    checkRowLevelPermission(user, args.uid)
+  createLocation(
+    @Args('createLocationInput') args: CreateLocationInput,
+    @GetUser() user: GetUserType,
+  ) {
     return this.locationsService.create(args)
   }
 
@@ -33,17 +45,26 @@ export class LocationsResolver {
 
   @AllowAuthenticated()
   @Mutation(() => Location)
-  async updateLocation(@Args('updateLocationInput') args: UpdateLocationInput, @GetUser() user: GetUserType) {
-    const location = await this.prisma.location.findUnique({ where: { id: args.id } })
-    checkRowLevelPermission(user, location.uid)
+  async updateLocation(
+    @Args('updateLocationInput') args: UpdateLocationInput,
+    @GetUser() user: GetUserType,
+  ) {
     return this.locationsService.update(args)
   }
 
   @AllowAuthenticated()
   @Mutation(() => Location)
-  async removeLocation(@Args() args: FindUniqueLocationArgs, @GetUser() user: GetUserType) {
-    const location = await this.prisma.location.findUnique(args)
-    checkRowLevelPermission(user, location.uid)
+  async removeLocation(
+    @Args() args: FindUniqueLocationArgs,
+    @GetUser() user: GetUserType,
+  ) {
     return this.locationsService.remove(args)
+  }
+
+  @ResolveField(() => Warehouse)
+  warehouse(@Parent() location: Location) {
+    return this.prisma.warehouse.findUnique({
+      where: { id: location.warehouseId },
+    })
   }
 }

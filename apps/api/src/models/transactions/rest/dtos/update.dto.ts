@@ -5,4 +5,3 @@ import { Transaction } from '@prisma/client'
 export class UpdateTransaction extends PartialType(CreateTransaction) {
   id: Transaction['id']
 }
-

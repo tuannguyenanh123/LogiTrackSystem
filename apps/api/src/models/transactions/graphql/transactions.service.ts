@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { FindManyTransactionArgs, FindUniqueTransactionArgs } from './dtos/find.args'
+import {
+  FindManyTransactionArgs,
+  FindUniqueTransactionArgs,
+} from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateTransactionInput } from './dtos/create-transaction.input'
 import { UpdateTransactionInput } from './dtos/update-transaction.input'

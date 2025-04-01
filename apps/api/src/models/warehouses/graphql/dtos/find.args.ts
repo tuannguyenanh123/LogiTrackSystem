@@ -10,7 +10,11 @@ registerEnumType(Prisma.WarehouseScalarFieldEnum, {
 
 @ArgsType()
 class FindManyWarehouseArgsStrict
-  implements RestrictProperties<FindManyWarehouseArgsStrict, Omit<Prisma.WarehouseFindManyArgs, 'include' | 'select'>>
+  implements
+    RestrictProperties<
+      FindManyWarehouseArgsStrict,
+      Omit<Prisma.WarehouseFindManyArgs, 'include' | 'select'>
+    >
 {
   where: WarehouseWhereInput
   orderBy: WarehouseOrderByWithRelationInput[]

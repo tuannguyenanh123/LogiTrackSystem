@@ -10,7 +10,11 @@ registerEnumType(Prisma.LocationScalarFieldEnum, {
 
 @ArgsType()
 class FindManyLocationArgsStrict
-  implements RestrictProperties<FindManyLocationArgsStrict, Omit<Prisma.LocationFindManyArgs, 'include' | 'select'>>
+  implements
+    RestrictProperties<
+      FindManyLocationArgsStrict,
+      Omit<Prisma.LocationFindManyArgs, 'include' | 'select'>
+    >
 {
   where: LocationWhereInput
   orderBy: LocationOrderByWithRelationInput[]

@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { FindManyInventoryArgs, FindUniqueInventoryArgs } from './dtos/find.args'
+import {
+  FindManyInventoryArgs,
+  FindUniqueInventoryArgs,
+} from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateInventoryInput } from './dtos/create-inventory.input'
 import { UpdateInventoryInput } from './dtos/update-inventory.input'

@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import { FindManyDistributorArgs, FindUniqueDistributorArgs } from './dtos/find.args'
+import {
+  FindManyDistributorArgs,
+  FindUniqueDistributorArgs,
+} from './dtos/find.args'
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { CreateDistributorInput } from './dtos/create-distributor.input'
 import { UpdateDistributorInput } from './dtos/update-distributor.input'
@@ -22,9 +25,9 @@ export class DistributorsService {
   }
 
   update(updateDistributorInput: UpdateDistributorInput) {
-    const { id, ...data } = updateDistributorInput
+    const { uid, ...data } = updateDistributorInput
     return this.prisma.distributor.update({
-      where: { id },
+      where: { uid },
       data: data,
     })
   }

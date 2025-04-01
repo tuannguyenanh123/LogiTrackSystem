@@ -1,5 +1,12 @@
 import {
-  Controller, Get, Post, Body, Patch, Param, Delete, Query
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
 } from '@nestjs/common'
 
 import { PrismaService } from 'src/common/prisma/prisma.service'
@@ -17,7 +24,6 @@ import { AllowAuthenticated, GetUser } from 'src/common/auth/auth.decorator'
 import { GetUserType } from 'src/common/types'
 import { checkRowLevelPermission } from 'src/common/auth/util'
 
-
 @ApiTags('retailers')
 @Controller('retailers')
 export class RetailersController {
@@ -27,7 +33,10 @@ export class RetailersController {
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: RetailerEntity })
   @Post()
-  create(@Body() createRetailerDto: CreateRetailer, @GetUser() user: GetUserType) {
+  create(
+    @Body() createRetailerDto: CreateRetailer,
+    @GetUser() user: GetUserType,
+  ) {
     checkRowLevelPermission(user, createRetailerDto.uid)
     return this.prisma.retailer.create({ data: createRetailerDto })
   }
@@ -43,34 +52,34 @@ export class RetailersController {
   }
 
   @ApiOkResponse({ type: RetailerEntity })
-  @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.prisma.retailer.findUnique({ where: { id } })
+  @Get(':uid')
+  findOne(@Param('uid') uid: string) {
+    return this.prisma.retailer.findUnique({ where: { uid } })
   }
 
   @ApiOkResponse({ type: RetailerEntity })
   @ApiBearerAuth()
   @AllowAuthenticated()
-  @Patch(':id')
+  @Patch(':uid')
   async update(
-    @Param('id') id: number,
+    @Param('uid') uid: string,
     @Body() updateRetailerDto: UpdateRetailer,
     @GetUser() user: GetUserType,
   ) {
-    const retailer = await this.prisma.retailer.findUnique({ where: { id } })
+    const retailer = await this.prisma.retailer.findUnique({ where: { uid } })
     checkRowLevelPermission(user, retailer.uid)
     return this.prisma.retailer.update({
-      where: { id },
+      where: { uid },
       data: updateRetailerDto,
     })
   }
 
   @ApiBearerAuth()
   @AllowAuthenticated()
-  @Delete(':id')
-  async remove(@Param('id') id: number, @GetUser() user: GetUserType) {
-    const retailer = await this.prisma.retailer.findUnique({ where: { id } })
+  @Delete(':uid')
+  async remove(@Param('uid') uid: string, @GetUser() user: GetUserType) {
+    const retailer = await this.prisma.retailer.findUnique({ where: { uid } })
     checkRowLevelPermission(user, retailer.uid)
-    return this.prisma.retailer.delete({ where: { id } })
+    return this.prisma.retailer.delete({ where: { uid } })
   }
 }
