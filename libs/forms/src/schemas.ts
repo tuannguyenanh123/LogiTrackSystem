@@ -15,3 +15,32 @@ export const formSchemaSignIn = formSchemaRegister.pick({
 export const formSchemaCreateItem = z.object({
   name: z.string().min(2),
 })
+
+export const addressSchema = z.object({
+  latitude: z.number(),
+  longitude: z.number(),
+  address: z.string(),
+})
+
+export const formSchemaCreateWarehouse = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  manufacturerId: z.string().optional(),
+  distributorId: z.string().optional(),
+  retailerId: z.string().optional(),
+  address: addressSchema,
+})
+
+export const formSchemaTransferInventory = z.object({
+  productId: z.number(),
+  quantity: z.number(),
+  fromWarehouseId: z.number(),
+  toWarehouseId: z.number(),
+})
+
+
+export const formSchemaSellInventory = z.object({
+  productId: z.number(),
+  quantity: z.number(),
+  warehouseId: z.number(),
+})

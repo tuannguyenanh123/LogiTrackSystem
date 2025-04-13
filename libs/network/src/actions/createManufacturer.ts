@@ -8,7 +8,7 @@
  } from '../queries/generated'
  
  export async function createManufacturer({ uid }: { uid: string }) {
-   const { data } = await fetchGraphQLServer({
+   const { data, error } = await fetchGraphQLServer({
      document: CreateManufacturerDocument,
      variables: {
        createManufacturerInput: { uid },
