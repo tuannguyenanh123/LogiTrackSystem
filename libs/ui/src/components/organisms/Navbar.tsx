@@ -9,7 +9,7 @@ import { Sidebar } from './Sidebar'
 export const Navbar = () => {
   return (
     <nav className="sticky top-0 w-full h-12 bg-white/40 backdrop-blur backdrop-filter">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mt-1">
         <Brand />
         <div>
           <Sidebar>
